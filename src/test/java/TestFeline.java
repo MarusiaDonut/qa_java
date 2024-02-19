@@ -1,24 +1,40 @@
 import com.example.Feline;
-import com.example.Predator;
-import org.junit.Test;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+
 import java.util.List;
-import com.example.Cat;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestCat {
+public class TestFeline {
 
-    @Mock
+    @Spy
     Feline feline;
 
     @Test
-    public void foodVerifyTest() throws Exception {
-        feline.getFood("Хищник");
-        Mockito.verify(feline).getFood("Хищник");
+    public void getFoodVerifyTest() throws Exception {
+        feline.eatMeat();
+        Mockito.verify(feline).eatMeat();
+    }
 
+    @Test
+    public void getFoodTest() throws Exception {
+        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Трава", "Различные растения"));
+        Assert.assertEquals(List.of("Трава", "Различные растения"), feline.getFood("Хищник"));
+    }
+
+    @Test
+    public void countKittens() {
+        Mockito.when(feline.getKittens()).thenReturn(2);
+        Assert.assertEquals(2, feline.getKittens());
+    }
+
+    @Test
+    public  void familyTest() {
+        Mockito.when(feline.getFamily()).thenReturn("Кошачьи");
+        Assert.assertEquals("Кошачьи", feline.getFamily());
     }
 }
